@@ -30,6 +30,26 @@ class HorariosState extends State<Horarios> {
     });
   }
 
+  Card cardAtIndex(int index, int _selected) {
+    return Card(
+      elevation: 3.5,
+      color: _selected == index ? Colors.green[200] : Colors.green[50],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+        side: BorderSide(
+            width: 2.5, color: Colors.lightGreen, style: BorderStyle.solid),
+      ),
+      margin: EdgeInsets.all(4.5),
+      child: new FlatButton(
+        onPressed: () => _selectCard(index), //Push notifications
+        child: Text(
+          horario[index],
+          style: TextStyle(color: Colors.black87),
+        ),
+      ),
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[400],
@@ -37,21 +57,11 @@ class HorariosState extends State<Horarios> {
         backgroundColor: Colors.green,
         title: Text("$day 411\n desde $from"),
       ),
-      body: new ListView.builder(
+      body: ListView.builder(
         itemCount: horario == null ? 0 : horario.length,
         itemBuilder: (BuildContext context, int index) {
-          return new Card(
-            elevation: 3.5,
-            color: _selected == index ? Colors.green[200] : Colors.green[50],
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-            child: new FlatButton(
-              onPressed: () => _selectCard(index), //Push notifications
-              child: Text(
-                horario[index],
-                style: TextStyle(color: Colors.black87),
-              ),
-            ),
+          return new Container(
+            child: cardAtIndex(index, _selected),
           );
         },
       ),

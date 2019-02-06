@@ -9,10 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  String laborable = "Laborables";
-  String festivo = "Festivos";
-  String perales = "Perales";
-  String legazpi = "Legazpi";
   Widget build(BuildContext context) {
     //Devuelve una clase tipo Widget
     return MaterialApp(
@@ -22,62 +18,13 @@ class HomePageState extends State<HomePage> {
           title: Text("Horarios 411"),
           elevation: 1.0,
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              UserAccountsDrawerHeader(
-                accountName: Text(
-                  "Wilson",
-                ),
-                accountEmail: Text(
-                  "Github code",
-                ),
-                onDetailsPressed: _launchURL,
-                decoration: BoxDecoration(
-                  color: Colors.green.shade600,
-                ),
-              ),
-              ListTile(
-                title: Text("411 Laborables Perales"),
-                trailing: Icon(Icons.arrow_forward),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => Horarios(
-                        Datos.getHorarioLaborablesPerales(),
-                        laborable,
-                        perales))),
-              ),
-              ListTile(
-                title: Text("411 Fines de semana Perales"),
-                trailing: Icon(Icons.arrow_forward),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => Horarios(
-                        Datos.getHorarioFestivosPerales(), festivo, perales))),
-              ),
-              Divider(
-                color: Colors.green,
-              ),
-              ListTile(
-                title: Text("411 Laborables Legazpi"),
-                trailing: Icon(Icons.arrow_back),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => Horarios(
-                        Datos.getHorarioLaborablesLegazpi(),
-                        laborable,
-                        legazpi))),
-              ),
-              ListTile(
-                title: Text("411 Fines de semana Legazpi"),
-                trailing: Icon(Icons.arrow_back),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => Horarios(
-                        Datos.getHorarioFestivosLegazpi(), festivo, legazpi))),
-              ),
-            ],
-          ),
-        ),
+        drawer: _drawer(context),
         body: new Center(
             child: Column(children: [
-          Icon(Icons.directions_bus, size: 300.0, color: Colors.green.shade600),
+          Padding(
+              padding: EdgeInsets.only(top: 110.0, bottom: 30.0),
+              child: Icon(Icons.directions_bus,
+                  size: 300.0, color: Colors.green.shade600)),
           Text(
             "* Viernes y visperas de festivo\n** Sabados",
             style: TextStyle(
@@ -98,4 +45,60 @@ _launchURL() async {
   } else {
     throw 'Could not launch $url';
   }
+}
+
+Drawer _drawer(BuildContext context) {
+  String laborable = "Laborables";
+  String festivo = "Festivos";
+  String perales = "Perales";
+  String legazpi = "Legazpi";
+  return Drawer(
+    child: ListView(
+      children: <Widget>[
+        UserAccountsDrawerHeader(
+          accountName: Text(
+            "Wilson",
+          ),
+          accountEmail: Text(
+            "Github code",
+          ),
+          onDetailsPressed: _launchURL,
+          decoration: BoxDecoration(
+            color: Colors.green.shade600,
+          ),
+        ),
+        ListTile(
+          title: Text("411 Laborables Perales"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => Horarios(
+                  Datos.getHorarioLaborablesPerales(), laborable, perales))),
+        ),
+        ListTile(
+          title: Text("411 Fines de semana Perales"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => Horarios(
+                  Datos.getHorarioFestivosPerales(), festivo, perales))),
+        ),
+        Divider(
+          color: Colors.green,
+        ),
+        ListTile(
+          title: Text("411 Laborables Legazpi"),
+          trailing: Icon(Icons.arrow_back),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => Horarios(
+                  Datos.getHorarioLaborablesLegazpi(), laborable, legazpi))),
+        ),
+        ListTile(
+          title: Text("411 Fines de semana Legazpi"),
+          trailing: Icon(Icons.arrow_back),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => Horarios(
+                  Datos.getHorarioFestivosLegazpi(), festivo, legazpi))),
+        ),
+      ],
+    ),
+  );
 }
